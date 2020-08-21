@@ -1,0 +1,132 @@
+:root {
+    background-color: whitesmoke;
+    /* this should make the font size 10 px and scalable to be 62.5% of the default 16px*/
+    font-size: 62.5%;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/* Header styles */
+header {
+    background-color: rgb(159, 216, 224);
+}
+header h1 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5.4rem;
+}
+
+header div {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px;
+    font-size: 2.4rem;
+}
+header div a {
+    text-decoration: none;
+    color: teal;
+}
+
+header div a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* page content styles */
+.page-content {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    
+}
+
+.quiz-box {
+    width: 800px;
+    max-width: 80%;
+    background-color: rgb(203, 229, 233);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 0 10px 2px;
+    font-size: 1.7rem;
+}
+
+/* button styles */
+.btn-container {
+    display: grid;
+    gap: 2px;
+    margin:10px;
+}
+
+.btn, .start-btn {
+    background-color: rgb(159, 216, 224);
+    border: 2px solid;
+    border-radius: 8px;
+    padding: 1.5rem;
+    font-size: 1.7rem;
+    width: 100%;
+}
+
+.btn:hover, .start-btn:hover {
+  border-color: black;
+  background-color: teal;
+  cursor: pointer;
+  transform: translate(-0.1rem);
+  /* transition: transform 150ms; */
+  box-shadow: 0 0.4rem 1.4rem 0 black;
+}
+
+.start-btn {
+    font-weight: bold;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.btn[disabled]:hover {
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+/* answer styles */
+.answer-display {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    border-top: rgb(76, 86, 117) 1px solid;
+    font-size: 1.7rem;
+}
+.answer-display div {
+    text-align: center;
+    font-size: 1.7rem;
+}
+.correct {
+    background-color: green;
+}
+
+.incorrect {
+    background-color: red;
+}
+
+.hidden {
+    display: none;
+}
