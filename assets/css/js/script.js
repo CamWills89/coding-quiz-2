@@ -1,3 +1,4 @@
+//query Selectprs
 var startBtnEl = document.querySelector(".start-btn");
 var instructionsEl = document.querySelector(".instructions")
 var questionLabelEl = document.querySelector(".question-label")
@@ -5,8 +6,16 @@ var questionEl = document.querySelector(".question")
 var btnContainerEl = document.querySelector(".btn-container")
 var displayEl = document.querySelector(".display")
 var timeEl = document.querySelector(".time");
-var answerEl = document.querySelector(".btn");
-// console.log(answerEl);
+
+//Element Id selectors
+var scoreDisplay = document.getElementById("score");
+var answerBtn1El = document.getElementById("btn-1");
+var answerBtn2El = document.getElementById("btn-2");
+var answerBtn3El = document.getElementById("btn-3");
+var answerBtn4El = document.getElementById("btn-4");
+
+var score = 0;
+var correct = 10;
 
 var questions = [
     {
@@ -35,6 +44,13 @@ var questions = [
         correctAnswer: 3
     }
 ];
+
+var answerBtns = [];
+answerBtns.push(answerBtn1El);
+answerBtns.push(answerBtn2El);
+answerBtns.push(answerBtn3El);
+answerBtns.push(answerBtn4El);
+
 // console.log(questions);
 var currentQuestion = 0;
 //need to start timer
@@ -76,46 +92,66 @@ function hider() {
 
 // console.log(questionEl);
 function showQuestions() {
+    score = 0;
     //display question
     questionEl.textContent = questions[currentQuestion].question;
-    //display answers -
-
-    //this for loop let me create the element, but i couldn't figure out how to shuffle to next answers
-    for (var i = 0; i < questions[currentQuestion].answers.length; i++) {
-        console.log(questions[currentQuestion].answers[i]);
-
+    //display answers - worked with fellow student (Tony Zeuch) to help me with this
+    for (var i = 0; i < answerBtns.length; i++) {
+        answerBtns[i].textContent = questions[currentQuestion].answers[i];
     }
 }
+    // answerBtns.addEventListener("click", getNextQuestion)
+    //this for loop let me create the element, but i couldn't figure out how to shuffle to next answers
+    // for (var i = 0; i < questions[currentQuestion].answers.length; i++) {
+    //     console.log(questions[currentQuestion].answers[i]);
+    // answerEl.textContent = questions[currentQuestion].answers;
+    //}
 
-    // questions[currentQuestion].answers.forEach(function (answer) {
-        //     console.log(answer);
-        // });
+// questions[currentQuestion].answers.forEach(function (answer) {
+//     console.log(answer);
+// });
 
-    //this is dynamically creating the buttons.
-        // var button = document.createElement("button");
-        // button.setAttribute("data-number", [i])
-        // button.textContent = questions[currentQuestion].answers[i];
-        // button.classList.add("btn");
-        // button.addEventListener("click", getNextQuestion);
-        // btnContainerEl.appendChild(button)
-        // console.log(button);
-    // };
-    // if (button === questions[currentQuestion].correctAnswer) {
-    // console.log("yes");
-    // } else {
-    //     console.log("no");
-    // }
+//this is dynamically creating the buttons.
+// var button = document.createElement("button");
+// button.setAttribute("data-number", [i])
+// button.textContent = questions[currentQuestion].answers[i];
+// button.classList.add("btn");
+// button.addEventListener("click", getNextQuestion);
+// btnContainerEl.appendChild(button)
+// console.log(button);
 
+// if (button === questions[currentQuestion].correctAnswer) {
+// console.log("yes");
+// } else {
+//     console.log("no");
+// }
 
-function clearQuestion() {
-    btnContainerEl.removeChild(button)
+function checkAnswer(selection) {
+ //check if answer is correct
+if (selection === questions[currentQuestion].correctAnswer) {
+    var result = document.getElementById("answer");
+    var text = document.createTextNode("Correct!");
+    //display result
+    result.appendChild(text);
+    scoreTracker(correct);
+} 
+else {
+    var result = document.getElementById("answer");
+    var text = document.createTextNode("Incorrect!");
+    //display result
+    result.appendChild(text);
+}
+
+setTimeout(function() {
+    result.removeChild(text);
+    getNextQuestion();
+}, 250);
+
 }
 
 function getNextQuestion() {
     // console.log("click");
-    
-    //check if answer is correct
-    //display result
+
     currentQuestion++;
     //go to next question
     if (currentQuestion < questions.length) {
@@ -125,7 +161,25 @@ function getNextQuestion() {
     }
     //call showQuestion to display next
 }
-// console.log(currentQuestion);
+
+scoreTracker = function (num) {
+    score += num;
+    scoreDisplay.textContent = score;
+}
+
+
 
 //Event Listeners
 startBtnEl.addEventListener("click", startGame);
+answerBtn1El.addEventListener("click", function(){
+    checkAnswer(0);
+})
+answerBtn2El.addEventListener("click", function(){
+    checkAnswer(1);
+})
+answerBtn3El.addEventListener("click", function(){
+    checkAnswer(2);
+})
+answerBtn4El.addEventListener("click", function(){
+    checkAnswer(3);
+})
