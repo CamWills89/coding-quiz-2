@@ -8,7 +8,7 @@ var displayEl = document.querySelector(".display")
 var timeEl = document.querySelector(".time");
 
 //Element Id selectors
-var scoreDisplay = document.getElementById("score");
+var scoreDisplayEl = document.getElementById("score");
 var answerBtn1El = document.getElementById("btn-1");
 var answerBtn2El = document.getElementById("btn-2");
 var answerBtn3El = document.getElementById("btn-3");
@@ -16,6 +16,8 @@ var answerBtn4El = document.getElementById("btn-4");
 
 var score = 0;
 var correct = 10;
+
+var timer;
 
 var questions = [
     {
@@ -61,7 +63,7 @@ var currentQuestion = 0;
 //remove time for wrong answers
 function startGame() {
     // console.log('clicked');
-    // countdown();
+    countdown();
     hider()
     showQuestions();
 };
@@ -71,6 +73,7 @@ function countdown() {
     var timeInterval = setInterval(function () {
         if (timer == 0) {
             clearInterval(timeInterval);
+            console.log("game over!");
         } else {
             timer--;
             timeEl.textContent = timer;
@@ -100,12 +103,12 @@ function showQuestions() {
         answerBtns[i].textContent = questions[currentQuestion].answers[i];
     }
 }
-    // answerBtns.addEventListener("click", getNextQuestion)
-    //this for loop let me create the element, but i couldn't figure out how to shuffle to next answers
-    // for (var i = 0; i < questions[currentQuestion].answers.length; i++) {
-    //     console.log(questions[currentQuestion].answers[i]);
-    // answerEl.textContent = questions[currentQuestion].answers;
-    //}
+// answerBtns.addEventListener("click", getNextQuestion)
+//this for loop let me create the element, but i couldn't figure out how to shuffle to next answers
+// for (var i = 0; i < questions[currentQuestion].answers.length; i++) {
+//     console.log(questions[currentQuestion].answers[i]);
+// answerEl.textContent = questions[currentQuestion].answers;
+//}
 
 // questions[currentQuestion].answers.forEach(function (answer) {
 //     console.log(answer);
@@ -127,31 +130,33 @@ function showQuestions() {
 // }
 
 function checkAnswer(selection) {
- //check if answer is correct
-if (selection === questions[currentQuestion].correctAnswer) {
-    var result = document.getElementById("answer");
-    var text = document.createTextNode("Correct!");
-    //display result
-    result.appendChild(text);
-    scoreTracker(correct);
-} 
-else {
-    var result = document.getElementById("answer");
-    var text = document.createTextNode("Incorrect!");
-    //display result
-    result.appendChild(text);
-}
-
-setTimeout(function() {
-    result.removeChild(text);
-    getNextQuestion();
-}, 250);
+    //check if answer is correct
+    if (selection === questions[currentQuestion].correctAnswer) {
+        var result = document.getElementById("answer");
+        var text = document.createTextNode("Correct!");
+        //display result
+        result.appendChild(text);
+        scoreTracker(correct);
+    }
+    else {
+        var result = document.getElementById("answer");
+        var text = document.createTextNode("Incorrect!");
+        //display result
+        result.appendChild(text);
+        timer -= 10;
+    }
+    if (selection === questions[currentQuestion].correctAnswer) {
+        scoreTracker(correct);
+    }
+    setTimeout(function () {
+        result.removeChild(text);
+        getNextQuestion();
+    }, 250);
 
 }
 
 function getNextQuestion() {
     // console.log("click");
-
     currentQuestion++;
     //go to next question
     if (currentQuestion < questions.length) {
@@ -162,24 +167,24 @@ function getNextQuestion() {
     //call showQuestion to display next
 }
 
-scoreTracker = function (num) {
-    score += num;
-    scoreDisplay.textContent = score;
+scoreTracker = function (number) {
+    score += number;
+    scoreDisplayEl.textContent = score;
 }
 
 
 
 //Event Listeners
 startBtnEl.addEventListener("click", startGame);
-answerBtn1El.addEventListener("click", function(){
+answerBtn1El.addEventListener("click", function () {
     checkAnswer(0);
 })
-answerBtn2El.addEventListener("click", function(){
+answerBtn2El.addEventListener("click", function () {
     checkAnswer(1);
 })
-answerBtn3El.addEventListener("click", function(){
+answerBtn3El.addEventListener("click", function () {
     checkAnswer(2);
 })
-answerBtn4El.addEventListener("click", function(){
+answerBtn4El.addEventListener("click", function () {
     checkAnswer(3);
 })
