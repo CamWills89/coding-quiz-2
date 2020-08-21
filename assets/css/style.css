@@ -116,13 +116,13 @@ header div a:hover {
     
 }
 
-.btn[disabled]:hover {
+/* .btn[disabled]:hover {
     cursor: not-allowed;
     box-shadow: none;
     transform: none;
-}
+} */
 /* answer styles */
-.answer-display {
+.display {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -131,7 +131,7 @@ header div a:hover {
     border-top: rgb(76, 86, 117) 1px solid;
     font-size: 1.7rem;
 }
-.answer-display div {
+.display div {
     text-align: center;
     font-size: 1.7rem;
 }

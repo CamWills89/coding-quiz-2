@@ -12,7 +12,8 @@
     <header>
         <h1>Coding Quiz</h1>
         <div>
-            <h3>Time: <span id="time">75</span></h3>
+            <p>View High Scores</p>
+            <h3>Time: <span class="time">75</span></h3>
         </div>
     </header>
     <main class="page-content">
@@ -20,34 +21,34 @@
         <div class="instructions">
             <h2>Instructions</h2>
             <p>Answer the following JavaScript related questions with the time-limit.
-                Correct answers will be scored. Your timer will have 10 seconds taken 
+                Correct answers will be scored, 10 points each. Your timer will have 10 seconds taken 
                 off for each incorrect answer given. Good Luck!
             </p>
         </div>
         <section class="quiz-box">
             <section> 
                 <!-- will change css class to hide  -->
-                <p class="start-btn">Start Quiz</p>
+                <button class="start-btn">Start Quiz</button>
             </section>
             <!-- will change css class to question -->
-            <h2 class="hide">Question:</h2>
+            <h2 class="question-label hide">Question: <span class="question"></span> </h2>
             <!-- will change the css selector from hide to btn-container -->
-            <div class="hide">
+            <div class="btn-container hide">
                 <div class="answer-container">
-                    <p class="btn" data-number="1">Answer 1</p>
+                    <p id="" class="btn btn-1" data-number="1">Answer 1</p>
                 </div>
                 <div class="answer-container">
-                    <p class="btn" data-number="2">Answer 2</p>
+                    <p class="btn btn-2" data-number="2">Answer 2</p>
                 </div>
                 <div class="answer-container">
-                    <p class="btn" data-number="3">Answer 3</p>
+                    <p class="btn btn-3" data-number="3">Answer 3</p>
                 </div>
                 <div class="answer-container">
-                    <p class="btn" data-number="4">Answer 4</p>
+                    <p class="btn btn-4" data-number="4">Answer 4</p>
                 </div>
             </div>
             <!-- will change css class to answer-display -->
-            <div class="hide">
+            <div class="display hide">
                 <h4 id="answer"></h4>
                 <div>
                     <p>Score</p>
@@ -56,7 +57,7 @@
             </div>
         </section>
 </main>
-<script src="/assets/css/js/script.js"></script>
+<script src="assets/css/js/script.js"></script>
 </body>
 
 </html>
