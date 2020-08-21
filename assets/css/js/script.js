@@ -47,7 +47,7 @@ function startGame() {
     // console.log('clicked');
     // countdown();
     hider()
-    // showQuestions();
+    showQuestions();
 };
 
 function countdown() {
@@ -74,7 +74,58 @@ function hider() {
 }
 
 
+// console.log(questionEl);
+function showQuestions() {
+    //display question
+    questionEl.textContent = questions[currentQuestion].question;
+    //display answers -
 
+    //this for loop let me create the element, but i couldn't figure out how to shuffle to next answers
+    for (var i = 0; i < questions[currentQuestion].answers.length; i++) {
+        console.log(questions[currentQuestion].answers[i]);
+
+    }
+}
+
+    // questions[currentQuestion].answers.forEach(function (answer) {
+        //     console.log(answer);
+        // });
+
+    //this is dynamically creating the buttons.
+        // var button = document.createElement("button");
+        // button.setAttribute("data-number", [i])
+        // button.textContent = questions[currentQuestion].answers[i];
+        // button.classList.add("btn");
+        // button.addEventListener("click", getNextQuestion);
+        // btnContainerEl.appendChild(button)
+        // console.log(button);
+    // };
+    // if (button === questions[currentQuestion].correctAnswer) {
+    // console.log("yes");
+    // } else {
+    //     console.log("no");
+    // }
+
+
+function clearQuestion() {
+    btnContainerEl.removeChild(button)
+}
+
+function getNextQuestion() {
+    // console.log("click");
+    
+    //check if answer is correct
+    //display result
+    currentQuestion++;
+    //go to next question
+    if (currentQuestion < questions.length) {
+        showQuestions();
+    } else {
+        console.log("End of game")
+    }
+    //call showQuestion to display next
+}
+// console.log(currentQuestion);
 
 //Event Listeners
 startBtnEl.addEventListener("click", startGame);
