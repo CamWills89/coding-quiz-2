@@ -16,13 +16,23 @@
         </div>
     </header>
     <main class="page-content">
-        <section class="quiz-box"> 
-            <p id="start" class="start-btn">Start Quiz</p>
-        </section>
-
+        <!-- will change css class to hide  -->
+        <div class="instructions">
+            <h2>Instructions</h2>
+            <p>Answer the following JavaScript related questions with the time-limit.
+                Correct answers will be scored. Your timer will have 10 seconds taken 
+                off for each incorrect answer given. Good Luck!
+            </p>
+        </div>
         <section class="quiz-box">
-            <h2 class="question">Question:</h2>
-            <div class="btn-container">
+            <section> 
+                <!-- will change css class to hide  -->
+                <p class="start-btn">Start Quiz</p>
+            </section>
+            <!-- will change css class to question -->
+            <h2 class="hide">Question:</h2>
+            <!-- will change the css selector from hide to btn-container -->
+            <div class="hide">
                 <div class="answer-container">
                     <p class="btn" data-number="1">Answer 1</p>
                 </div>
@@ -36,7 +46,8 @@
                     <p class="btn" data-number="4">Answer 4</p>
                 </div>
             </div>
-            <div class="answer-display">
+            <!-- will change css class to answer-display -->
+            <div class="hide">
                 <h4 id="answer"></h4>
                 <div>
                     <p>Score</p>
