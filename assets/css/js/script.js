@@ -1,10 +1,10 @@
 //query Selectprs
 var startBtnEl = document.querySelector(".start-btn");
-var instructionsEl = document.querySelector(".instructions")
-var questionLabelEl = document.querySelector(".question-label")
-var questionEl = document.querySelector(".question")
-var btnContainerEl = document.querySelector(".btn-container")
-var displayEl = document.querySelector(".display")
+var instructionsEl = document.querySelector(".instructions");
+var questionLabelEl = document.querySelector(".question-label");
+var questionEl = document.querySelector(".question");
+var btnContainerEl = document.querySelector(".btn-container");
+var displayEl = document.querySelector(".display");
 var timeEl = document.querySelector(".time");
 var endGameEl = document.querySelector(".end-game");
 var highScoresEL = document.querySelector(".high-scores");
@@ -26,8 +26,9 @@ var score = 0;
 var correct = 10;
 
 var timer;
+var timeInterval;
 
-var questions = [
+const questions = [
     {
         question: "Inside which HTML element do we put the JavaScript?",
         answers: ["<script>", "<javascript>", "<js>", "<scripting>"],
@@ -71,16 +72,16 @@ var currentQuestion = 0;
 //remove time for wrong answers
 function startGame() {
     // console.log('clicked');
+    timer = 75;
     countdown();
-    startHider();
     showQuestions();
 };
 
 function countdown() {
-    var timer = 75;
-    var timeInterval = setInterval(function () {
+    // timer = 75;
+    timeInterval = setInterval(function () {
         if (timer == 0) {
-            clearInterval(timeInterval);
+            
             // console.log("game over!");
             endGame();
         } else {
@@ -94,7 +95,7 @@ function countdown() {
 
 // console.log(questionEl);
 function showQuestions() {
-    // score = 0;
+    // startHider();
     //display question
     questionEl.textContent = questions[currentQuestion].question;
     //display answers - worked with fellow student (Tony Zeuch) to help me with this
@@ -102,31 +103,6 @@ function showQuestions() {
         answerBtns[i].textContent = questions[currentQuestion].answers[i];
     }
 };
-// answerBtns.addEventListener("click", getNextQuestion)
-//this for loop let me create the element, but i couldn't figure out how to shuffle to next answers
-// for (var i = 0; i < questions[currentQuestion].answers.length; i++) {
-//     console.log(questions[currentQuestion].answers[i]);
-// answerEl.textContent = questions[currentQuestion].answers;
-//}
-
-// questions[currentQuestion].answers.forEach(function (answer) {
-//     console.log(answer);
-// });
-
-//this is dynamically creating the buttons.
-// var button = document.createElement("button");
-// button.setAttribute("data-number", [i])
-// button.textContent = questions[currentQuestion].answers[i];
-// button.classList.add("btn");
-// button.addEventListener("click", getNextQuestion);
-// btnContainerEl.appendChild(button)
-// console.log(button);
-
-// if (button === questions[currentQuestion].correctAnswer) {
-// console.log("yes");
-// } else {
-//     console.log("no");
-// }
 
 function checkAnswer(selection) {
     //check if answer is correct
@@ -142,11 +118,11 @@ function checkAnswer(selection) {
         var text = document.createTextNode("Incorrect!");
         //display result
         result.appendChild(text);
-        // timer -= 10;
+        console.log("timer before", timer);
+        timer -= 10;
+        console.log("timer after", timer);
     }
-    // if (selection === questions[currentQuestion].correctAnswer) {
-    //     scoreTracker(correct);
-    // }
+
     setTimeout(function () {
         result.removeChild(text);
         currentQuestion++;
@@ -183,19 +159,38 @@ function endGame() {
     endGameEl.classList.remove("hide");
     //store initials and score in local storage
     //go to high scores screen
+    clearInterval(timeInterval);
 
+
+    submitEL.addEventListener("click", function(event) {
+        event.preventDefault();
+
+    var initials = document.querySelector("#initials").value
+    var highscore = {
+        score: score,
+        initials: initials
+    }
+    // localStorage.setItem("initials", initials);
+    localStorage.setItem("highscore", JSON.stringify(highscore));
+    });
     // if skip is selected, restart game
+
+    var currentScore = localStorage.getItem("highscore")
+    console.log(currentScore)
 };
 
 function resetGame() {
-    //if skip or go back buttons selected, restart game
-    instructionsEl.classList.remove("hide");
-    startBtnEl.classList.remove("hide");
-    endGameEl.classList.add("hide");
-    
+    // //if skip or go back buttons selected, restart game
+    // instructionsEl.classList.remove("hide");
+    // startBtnEl.classList.remove("hide");
+    // endGameEl.classList.add("hide");
+    // startGame();
+    // timer=75
+    location.reload();
    //tried to add the questions array, but it didnt work
     
-}
+};
+
 
 function startHider() {
     //remove instructions and startbtn from page
@@ -208,10 +203,13 @@ function startHider() {
 };
 
 //Event Listeners
-startBtnEl.addEventListener("click", startGame);
-
+startBtnEl.addEventListener("click", function() {
+    startHider();
+    startGame();
+});
 skipEl.addEventListener("click", resetGame);
 //answer buttons for answer checks
+
 answerBtn1El.addEventListener("click", function () {
     checkAnswer(0);
 });
@@ -224,4 +222,3 @@ answerBtn3El.addEventListener("click", function () {
 answerBtn4El.addEventListener("click", function () {
     checkAnswer(3);
 });
-
