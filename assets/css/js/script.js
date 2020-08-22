@@ -8,8 +8,12 @@ var displayEl = document.querySelector(".display")
 var timeEl = document.querySelector(".time");
 var endGameEl = document.querySelector(".end-game");
 var highScoresEL = document.querySelector(".high-scores");
+var submitEL = document.querySelector(".submit");
+var skipEl = document.querySelector(".skip");
+var goBackEl = document.querySelector(".go-back");
+var clearScoresEl = document.querySelector(".clear-scores");
 
-console.log(highScoresEL);
+// console.log(submitEL);
 
 //Element Id selectors
 var scoreDisplayEl = document.getElementById("score");
@@ -21,7 +25,7 @@ var answerBtn4El = document.getElementById("btn-4");
 var score = 0;
 var correct = 10;
 
-var timer;
+var timer = 0;
 
 var questions = [
     {
@@ -68,7 +72,7 @@ var currentQuestion = 0;
 function startGame() {
     // console.log('clicked');
     countdown();
-    hider()
+    startHider();
     showQuestions();
 };
 
@@ -77,23 +81,14 @@ function countdown() {
     var timeInterval = setInterval(function () {
         if (timer == 0) {
             clearInterval(timeInterval);
-            console.log("game over!");
+            // console.log("game over!");
+            endGame();
         } else {
             timer--;
-            timeEl.textContent = timer;
+            timeEl.textContent = (": " + timer);
             // console.log(timer);
         }
     }, 1000);
-};
-
-function hider() {
-    //remove instructions and startbtn from page
-    instructionsEl.classList.add("hide");
-    startBtnEl.classList.add("hide");
-    // add question, btn-container, display
-    questionLabelEl.classList.remove("hide");
-    btnContainerEl.classList.remove("hide");
-    displayEl.classList.remove("hide");
 };
 
 
@@ -167,7 +162,8 @@ function getNextQuestion() {
     if (currentQuestion < questions.length) {
         showQuestions();
     } else {
-        console.log("End of game")
+        // console.log("End of game")
+        endGame();
     }
     //call showQuestion to display next
 };
@@ -180,23 +176,52 @@ scoreTracker = function (num) {
 
 function endGame() {
     //hide questions,score, display and answers
+    questionLabelEl.classList.add("hide");
+    btnContainerEl.classList.add("hide");
+    displayEl.classList.add("hide");
     //show endgame screen
+    endGameEl.classList.remove("hide");
     //store initials and score in local storage
-    //go to
+    //go to high scores screen
+
+    // if skip is selected, restart game
 };
 
+function resetGame() {
+    //if skip or go back buttons selected, restart game
+    instructionsEl.classList.remove("hide");
+    startBtnEl.classList.remove("hide");
+    endGameEl.classList.add("hide");
+    
+   //tried to add the questions array, but it didnt work
+    
+}
+
+function startHider() {
+    //remove instructions and startbtn from page
+    instructionsEl.classList.add("hide");
+    startBtnEl.classList.add("hide");
+    // add question, btn-container, display
+    questionLabelEl.classList.remove("hide");
+    btnContainerEl.classList.remove("hide");
+    displayEl.classList.remove("hide");
+};
 
 //Event Listeners
 startBtnEl.addEventListener("click", startGame);
+
+skipEl.addEventListener("click", resetGame);
+//answer buttons for answer checks
 answerBtn1El.addEventListener("click", function () {
     checkAnswer(0);
-})
+});
 answerBtn2El.addEventListener("click", function () {
     checkAnswer(1);
-})
+});
 answerBtn3El.addEventListener("click", function () {
     checkAnswer(2);
-})
+});
 answerBtn4El.addEventListener("click", function () {
     checkAnswer(3);
-})
+});
+
