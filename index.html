@@ -17,22 +17,23 @@
         </div>
     </header>
     <main class="page-content">
-        <!-- will change css class to hide  -->
+        <!-- instructions  -->
         <div class="instructions">
             <h2>Instructions</h2>
             <p>Answer the following JavaScript related questions with the time-limit.
-                Correct answers will be scored, 10 points each. Your timer will have 10 seconds taken 
+                Correct answers will be scored, 10 points each. Your timer will have 10 seconds taken
                 off for each incorrect answer given. Good Luck!
             </p>
         </div>
+        <!-- the container that stores all the displayed content -->
         <section class="quiz-box">
-            <section> 
-                <!-- will change css class to hide  -->
+            <!-- Start button  -->
+            <section>
                 <button class="start-btn">Start Quiz</button>
             </section>
-            <!-- will change css class to question -->
+            <!-- Question label and question display -->
             <h2 class="question-label hide">Question: <span class="question"></span> </h2>
-            <!-- will change the css selector from hide to btn-container -->
+            <!-- the four answer buttons that will update to hold the answer choices-->
             <div class="btn-container hide">
                 <div class="answer-container">
                     <p id="btn-1" class="btn">Answer 1</p>
@@ -47,7 +48,7 @@
                     <p id="btn-4" class="btn">Answer 4</p>
                 </div>
             </div>
-            <!-- will change css class to answer-display -->
+            <!-- this displays the score and the whether the answers were correct/incorrect -->
             <div class="display hide">
                 <h4 id="answer"></h4>
                 <div>
@@ -55,9 +56,26 @@
                     <h4 id="score">0</h4>
                 </div>
             </div>
+            <!-- End of game display where initial and score is shown to submit to localStorage -->
+            <div class="end-game hide">
+                <h2 class="end-title">End of Quiz!</h2>
+                <p>Your score is: <span>0</span></p>
+                <form method="post">
+                    <label for="initials">Enter initials</label>
+                    <input type="text" name="initials" id="initials" placeholder="Initials">
+                    <button type="submit" class="submit">Submit</button>
+                    <button class="skip">Skip</button>
+                </form>
+            </div>
+            <!--HighScores leaderboard  -->
+            <div class="high-scores hide">
+                <h2>High Scores</h2>
+                <button class="go-back">Go back</button>
+                <button class="clear-scores">Clear High Scores</button>
+            </div>
         </section>
-</main>
-<script src="assets/css/js/script.js"></script>
+    </main>
+    <script src="assets/css/js/script.js"></script>
 </body>
 
 </html>

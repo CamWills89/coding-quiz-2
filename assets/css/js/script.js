@@ -6,6 +6,10 @@ var questionEl = document.querySelector(".question")
 var btnContainerEl = document.querySelector(".btn-container")
 var displayEl = document.querySelector(".display")
 var timeEl = document.querySelector(".time");
+var endGameEl = document.querySelector(".end-game");
+var highScoresEL = document.querySelector(".high-scores");
+
+console.log(highScoresEL);
 
 //Element Id selectors
 var scoreDisplayEl = document.getElementById("score");
@@ -90,7 +94,7 @@ function hider() {
     questionLabelEl.classList.remove("hide");
     btnContainerEl.classList.remove("hide");
     displayEl.classList.remove("hide");
-}
+};
 
 
 // console.log(questionEl);
@@ -102,7 +106,7 @@ function showQuestions() {
     for (var i = 0; i < answerBtns.length; i++) {
         answerBtns[i].textContent = questions[currentQuestion].answers[i];
     }
-}
+};
 // answerBtns.addEventListener("click", getNextQuestion)
 //this for loop let me create the element, but i couldn't figure out how to shuffle to next answers
 // for (var i = 0; i < questions[currentQuestion].answers.length; i++) {
@@ -143,21 +147,22 @@ function checkAnswer(selection) {
         var text = document.createTextNode("Incorrect!");
         //display result
         result.appendChild(text);
-        timer -= 10;
+        // timer -= 10;
     }
-    if (selection === questions[currentQuestion].correctAnswer) {
-        scoreTracker(correct);
-    }
+    // if (selection === questions[currentQuestion].correctAnswer) {
+    //     scoreTracker(correct);
+    // }
     setTimeout(function () {
         result.removeChild(text);
+        currentQuestion++;
         getNextQuestion();
     }, 250);
 
-}
+};
 
 function getNextQuestion() {
     // console.log("click");
-    currentQuestion++;
+    // currentQuestion++;
     //go to next question
     if (currentQuestion < questions.length) {
         showQuestions();
@@ -165,13 +170,20 @@ function getNextQuestion() {
         console.log("End of game")
     }
     //call showQuestion to display next
-}
+};
 
-scoreTracker = function (number) {
-    score += number;
+scoreTracker = function (num) {
+    score += num;
     scoreDisplayEl.textContent = score;
-}
+    console.log(score);
+};
 
+function endGame() {
+    //hide questions,score, display and answers
+    //show endgame screen
+    //store initials and score in local storage
+    //go to
+};
 
 
 //Event Listeners
