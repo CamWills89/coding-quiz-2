@@ -25,7 +25,7 @@ var answerBtn4El = document.getElementById("btn-4");
 var score = 0;
 var correct = 10;
 
-var timer = 0;
+var timer;
 
 var questions = [
     {
@@ -94,7 +94,7 @@ function countdown() {
 
 // console.log(questionEl);
 function showQuestions() {
-    score = 0;
+    // score = 0;
     //display question
     questionEl.textContent = questions[currentQuestion].question;
     //display answers - worked with fellow student (Tony Zeuch) to help me with this
