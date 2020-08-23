@@ -59,17 +59,18 @@
             <!-- End of game display where initial and score is shown to submit to localStorage -->
             <div class="end-game hide">
                 <h2 class="end-title">End of Quiz!</h2>
-                <p>Your score is: <span>0</span></p>
+                <p>Your score is: <span class="current-score">0</span></p>
                 <form method="post">
                     <label for="initials">Enter initials</label>
                     <input type="text" name="initials" id="initials" placeholder="Initials">
-                    <button type="submit" class="submit">Submit</button>
+                    <button type="submit" class="submit" disabled>Submit</button>
                 </form>
                 <button class="skip">Skip</button>
             </div>
             <!--HighScores leaderboard  -->
             <div class="high-scores hide">
                 <h2>High Scores</h2>
+                <ul class="high-scores-list"></ul>
                 <button class="go-back">Go back</button>
                 <button class="clear-scores">Clear High Scores</button>
             </div>
