@@ -13,8 +13,9 @@ var skipEl = document.querySelector(".skip");
 var goBackEl = document.querySelector(".go-back");
 var clearScoresEl = document.querySelector(".clear-scores");
 var currentScoreEl = document.querySelector(".current-score");
+var highScoresListEL = document.querySelector(".high-scores.list")
 
-// console.log(currentScoreEl);
+// console.log(highScoresListEL);
 
 //Element Id selectors
 var scoreDisplayEl = document.getElementById("score");
@@ -176,7 +177,6 @@ function setHighScores() {
     //get highscores from localStorage or return an empty array if there aren't any
     var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
 
-
     //submit highscores to local storage and add them to highScores already stored.
     submitEL.addEventListener("click", function (event) {
         event.preventDefault();
@@ -200,9 +200,21 @@ function showHighScoresList() {
     endGameEl.classList.add("hide");
     //show high scores screen
     highScoresEL.classList.remove("hide")
+
     //get highscores from localStorage
-    highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-    console.log(highScores);
+    // var highScoresListEL = document.querySelector(".high-scores.list")
+    scoresList = JSON.parse(localStorage.getItem("highScores")) || [];
+    console.log(scoresList);
+
+    ListEl = document.createElement("li");
+    ListEl.textContent = scoresList.initials + "- " + scoresList.score;
+    highScoresListEL.appendChild(ListEl);
+
+
+    //clear scores from local storage
+    clearScoresEl.addEventListener("click", function(){
+        localStorage.clear();
+    })
 };
 
 // //if skip or go back buttons selected, restart game
