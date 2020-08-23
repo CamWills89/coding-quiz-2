@@ -13,9 +13,9 @@ var skipEl = document.querySelector(".skip");
 var goBackEl = document.querySelector(".go-back");
 var clearScoresEl = document.querySelector(".clear-scores");
 var currentScoreEl = document.querySelector(".current-score");
-var highScoresListEL = document.querySelector(".high-scores.list")
+var highScoresListEL = document.querySelector(".high-scores-list")
 
-// console.log(highScoresListEL);
+console.log(highScoresListEL);
 
 //Element Id selectors
 var scoreDisplayEl = document.getElementById("score");
@@ -26,6 +26,7 @@ var answerBtn4El = document.getElementById("btn-4");
 
 var score = 0;
 var correct = 10;
+// var highScores = [];
 
 var timer;
 var timeInterval;
@@ -175,21 +176,26 @@ function setHighScores() {
     currentScoreEl.textContent = currentScore;
 
     //get highscores from localStorage or return an empty array if there aren't any
-    var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-
+    var highScores = JSON.parse(localStorage.getItem("highScores"));
+        // console.log(highScores)
+        if(!highScores){
+            highScores = [];
+        }
+        // console.log(highScores)
     //submit highscores to local storage and add them to highScores already stored.
     submitEL.addEventListener("click", function (event) {
         event.preventDefault();
 
         var initials = document.querySelector("#initials").value
-
+        
         var mostRecentScore = {
             score: currentScore,
             initials: initials
         }
         highScores.push(mostRecentScore);
 
-        localStorage.setItem("highScores", JSON.stringify(mostRecentScore));
+        localStorage.setItem("highScores", JSON.stringify(highScores));
+        // console.log(highScores)
         showHighScoresList();
     });
 }
@@ -201,15 +207,28 @@ function showHighScoresList() {
     //show high scores screen
     highScoresEL.classList.remove("hide")
 
-    //get highscores from localStorage
-    // var highScoresListEL = document.querySelector(".high-scores.list")
-    scoresList = JSON.parse(localStorage.getItem("highScores")) || [];
-    console.log(scoresList);
+    //getting unordered list 
+    // highScoresListEL = document.querySelector(".high-scores.list")
+//  var arraay = ["ed", "sdf", "asdg"]
 
-    ListEl = document.createElement("li");
-    ListEl.textContent = scoresList.initials + "- " + scoresList.score;
-    highScoresListEL.appendChild(ListEl);
+//  for (let i = 0; i < arraay.length; i++) {
+//      var list = document.createElement("li")
+//      list.textContent = arraay[i]
+//     highScoresListEL.appendChild(list)     
+//  }
+    //get highscores from localStorage and parse them
+    var highScores = JSON.parse(localStorage.getItem("highScores"));
+    // console.log(highScores)
+    if(!highScores){
+        highScores = [];
+    }
 
+    for (let i = 0; i < highScores.length; i++) {
+        // console.log(highScoresListEL);
+        var ListEl = document.createElement("li");
+        ListEl.textContent = highScores[i].initials + "- " + highScores[i].score;
+        highScoresListEL.appendChild(ListEl);
+}
 
     //clear scores from local storage
     clearScoresEl.addEventListener("click", function(){
