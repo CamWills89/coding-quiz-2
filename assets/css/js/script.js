@@ -14,8 +14,7 @@ var goBackEl = document.querySelector(".go-back");
 var clearScoresEl = document.querySelector(".clear-scores");
 var currentScoreEl = document.querySelector(".current-score");
 var highScoresListEL = document.querySelector(".high-scores-list")
-
-console.log(highScoresListEL);
+var viewHighScoresEl = document.querySelector(".view-scores")
 
 //Element Id selectors
 var scoreDisplayEl = document.getElementById("score");
@@ -24,13 +23,13 @@ var answerBtn2El = document.getElementById("btn-2");
 var answerBtn3El = document.getElementById("btn-3");
 var answerBtn4El = document.getElementById("btn-4");
 
+//Global varables
 var score = 0;
 var correct = 10;
-// var highScores = [];
-
 var timer;
 var timeInterval;
-
+var currentQuestion = 0;
+//Questions and Answers Lists
 const questions = [
     {
         question: "Inside which HTML element do we put the JavaScript?",
@@ -58,44 +57,34 @@ const questions = [
         correctAnswer: 3
     }
 ];
-
 var answerBtns = [];
 answerBtns.push(answerBtn1El);
 answerBtns.push(answerBtn2El);
 answerBtns.push(answerBtn3El);
 answerBtns.push(answerBtn4El);
 
-// console.log(questions);
-var currentQuestion = 0;
-//need to start timer
-//need to remove hide classes from answers and add hide to start screen
-//need to loop through array to display questions and answers
-//check answers
-//track score
-//remove time for wrong answers
+//Starting the quiz when the "Start Quiz" button is clicked
 function startQuiz() {
-    // console.log('clicked');
-    timer = 75;
+    //starting timer at 75 seconds
     countdown();
+    timer = 75;
+    //displaying first question and set of answers
     showQuestions();
 };
 
+//Countdown Timer, ends the quiz when time runs out
 function countdown() {
-    // timer = 75;
     timeInterval = setInterval(function () {
         if (timer == 0) {
-
-            // console.log("game over!");
             endGame();
         } else {
             timer--;
             timeEl.textContent = (": " + timer);
-            // console.log(timer);
         }
     }, 1000);
 };
 
-// console.log(questionEl);
+//displaying current question and answers
 function showQuestions() {
     //display question
     questionEl.textContent = questions[currentQuestion].question;
@@ -105,12 +94,13 @@ function showQuestions() {
     }
 };
 
+//Answer checker and moves on to next question
 function checkAnswer(selection) {
     //check if answer is correct
     if (selection === questions[currentQuestion].correctAnswer) {
         var result = document.getElementById("answer");
         var text = document.createTextNode("Correct!");
-        //display result
+        //display result as if the answer was correct
         result.appendChild(text);
         //add score
         scoreTracker(correct);
@@ -118,12 +108,12 @@ function checkAnswer(selection) {
     else {
         var result = document.getElementById("answer");
         var text = document.createTextNode("Incorrect!");
-        //display result
+        //display result if the answer was incorrect
         result.appendChild(text);
         // deduct 10 seconds from time
         timer -= 10;
     }
-    //setting delay before moving to next question to see if answer was right/wrong
+    //setting delay before moving to next question and removing the ("Correct/Incorrect") result display
     setTimeout(function () {
         result.removeChild(text);
         currentQuestion++;
@@ -132,12 +122,14 @@ function checkAnswer(selection) {
 
 };
 
+//question shuffler and ends the game if no questions are left.
 function getNextQuestion() {
     //go to next question
     if (currentQuestion < questions.length) {
-        //call showQuestion to display next question
+        //display next question
         showQuestions();
     } else {
+        //ends the game
         endGame();
     }
 };
@@ -159,7 +151,7 @@ function endGame() {
     //stop timer
     clearInterval(timeInterval);
 
-    //disabling the submit button until user types in value (initials) to the input field.
+    //submit button is disabled, it will be enabled only when user inputs a value into the input field
     var input = document.querySelector("#initials")
     input.addEventListener("keyup", function () {
         submitEL.disabled = !input.value
@@ -169,25 +161,22 @@ function endGame() {
 
 //submitting scores to local storage onclick
 function setHighScores() {
-    //show score
+    //display score
     var currentScore = score;
-    // timeleft = timer
-    // console.log(timeleft);
     currentScoreEl.textContent = currentScore;
 
     //get highscores from localStorage or return an empty array if there aren't any
     var highScores = JSON.parse(localStorage.getItem("highScores"));
-        // console.log(highScores)
-        if(!highScores){
-            highScores = [];
-        }
-        // console.log(highScores)
+    if (!highScores) {
+        highScores = [];
+    }
+
     //submit highscores to local storage and add them to highScores already stored.
     submitEL.addEventListener("click", function (event) {
         event.preventDefault();
 
         var initials = document.querySelector("#initials").value
-        
+
         var mostRecentScore = {
             score: currentScore,
             initials: initials
@@ -195,7 +184,6 @@ function setHighScores() {
         highScores.push(mostRecentScore);
 
         localStorage.setItem("highScores", JSON.stringify(highScores));
-        // console.log(highScores)
         showHighScoresList();
     });
 }
@@ -206,48 +194,53 @@ function showHighScoresList() {
     endGameEl.classList.add("hide");
     //show high scores screen
     highScoresEL.classList.remove("hide")
-
-    //getting unordered list 
-    // highScoresListEL = document.querySelector(".high-scores.list")
-//  var arraay = ["ed", "sdf", "asdg"]
-
-//  for (let i = 0; i < arraay.length; i++) {
-//      var list = document.createElement("li")
-//      list.textContent = arraay[i]
-//     highScoresListEL.appendChild(list)     
-//  }
-    //get highscores from localStorage and parse them
-    var highScores = JSON.parse(localStorage.getItem("highScores"));
-    // console.log(highScores)
-    if(!highScores){
-        highScores = [];
-    }
-
-    for (let i = 0; i < highScores.length; i++) {
-        // console.log(highScoresListEL);
-        var ListEl = document.createElement("li");
-        ListEl.textContent = highScores[i].initials + "- " + highScores[i].score;
-        highScoresListEL.appendChild(ListEl);
-}
-
-    //clear scores from local storage
-    clearScoresEl.addEventListener("click", function(){
-        localStorage.clear();
-    })
+    addScoreList();
+    clearScores();
 };
 
-// //if skip or go back buttons selected, restart game
+//get scores and add them to the leaderboard
+function addScoreList() {
+    //get highscores from localStorage and parse them
+    var highScores = JSON.parse(localStorage.getItem("highScores"));
+
+    //creating a list of scores from localStorage to display on the leaderboard
+    for (let i = 0; i < highScores.length; i++) {
+        var ListEl = document.createElement("li");
+        ListEl.className = "score-list"
+        ListEl.textContent = highScores[i].initials + "- " + highScores[i].score;
+        highScoresListEL.appendChild(ListEl);
+    }
+}
+
+function clearScores() {
+    //clear scores from local storage and remove the current list
+    clearScoresEl.addEventListener("click", function () {
+        localStorage.clear();
+        highScoresListEL.classList.add("hide")
+    })
+}
+
+//show high scores screen when "View High Scores" is selected from home screen
+function viewHighScores() {
+    instructionsEl.classList.add("hide");
+    startBtnEl.classList.add("hide");
+    highScoresEL.classList.remove("hide")
+    addScoreList();
+    clearScores()
+}
+//if skip or go back buttons selected, restart game
 function resetGame() {
     location.reload();
 };
 
-
+//moving into questions display from home screen
 function startHider() {
-    //remove instructions and startbtn from page
+    //remove instructions and start Quiz button from page
     instructionsEl.classList.add("hide");
     startBtnEl.classList.add("hide");
+    viewHighScoresEl.classList.add("hide");
 
-    // add question, btn-container, display
+    // display questions and answers
     questionLabelEl.classList.remove("hide");
     btnContainerEl.classList.remove("hide");
     displayEl.classList.remove("hide");
@@ -262,6 +255,7 @@ startBtnEl.addEventListener("click", function () {
 //reset game if these are selected
 skipEl.addEventListener("click", resetGame);
 goBackEl.addEventListener("click", resetGame)
+viewHighScoresEl.addEventListener("click", viewHighScores);
 
 //answer buttons for answer checks
 answerBtn1El.addEventListener("click", function () {
