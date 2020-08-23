@@ -18,3 +18,9 @@ This is a very simple quiz that will ask a series of javaScript related question
 ![Questions](https://user-images.githubusercontent.com/68020747/90988728-ad910080-e55a-11ea-856d-ec6b8f9fc502.PNG)
 ![EndGame](https://user-images.githubusercontent.com/68020747/90988731-b386e180-e55a-11ea-8ede-fb519e7b3b36.PNG)
 ![HighScoresList](https://user-images.githubusercontent.com/68020747/90988732-b550a500-e55a-11ea-8fa9-850ecc3bc3c4.PNG)
+
+### Link
+
+[Live URL] https://camwills89.github.io/coding-quiz-2/
+
+[Github repository] https://github.com/CamWills89/coding-quiz-2
