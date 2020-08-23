@@ -13,8 +13,8 @@ var skipEl = document.querySelector(".skip");
 var goBackEl = document.querySelector(".go-back");
 var clearScoresEl = document.querySelector(".clear-scores");
 var currentScoreEl = document.querySelector(".current-score");
-var highScoresListEL = document.querySelector(".high-scores-list")
-var viewHighScoresEl = document.querySelector(".view-scores")
+var highScoresListEL = document.querySelector(".high-scores-list");
+var viewHighScoresEl = document.querySelector(".view-scores");
 
 //Element Id selectors
 var scoreDisplayEl = document.getElementById("score");
@@ -112,7 +112,7 @@ function checkAnswer(selection) {
         result.appendChild(text);
         // deduct 10 seconds from time
         timer -= 10;
-    }
+    };
     //setting delay before moving to next question and removing the ("Correct/Incorrect") result display
     setTimeout(function () {
         result.removeChild(text);
@@ -152,9 +152,9 @@ function endGame() {
     clearInterval(timeInterval);
 
     //submit button is disabled, it will be enabled only when user inputs a value into the input field
-    var input = document.querySelector("#initials")
+    var input = document.querySelector("#initials");
     input.addEventListener("keyup", function () {
-        submitEL.disabled = !input.value
+        submitEL.disabled = !input.value;
     });
     setHighScores();
 };
@@ -169,31 +169,32 @@ function setHighScores() {
     var highScores = JSON.parse(localStorage.getItem("highScores"));
     if (!highScores) {
         highScores = [];
-    }
+    };
 
     //submit highscores to local storage and add them to highScores already stored.
     submitEL.addEventListener("click", function (event) {
         event.preventDefault();
 
-        var initials = document.querySelector("#initials").value
+        var initials = document.querySelector("#initials").value;
 
         var mostRecentScore = {
             score: currentScore,
             initials: initials
-        }
+        };
+
         highScores.push(mostRecentScore);
 
         localStorage.setItem("highScores", JSON.stringify(highScores));
         showHighScoresList();
     });
-}
+};
 
 //show highscores screen and display list from localStorage
 function showHighScoresList() {
     //remove end game screen
     endGameEl.classList.add("hide");
     //show high scores screen
-    highScoresEL.classList.remove("hide")
+    highScoresEL.classList.remove("hide");
     addScoreList();
     clearScores();
 };
@@ -206,28 +207,28 @@ function addScoreList() {
     //creating a list of scores from localStorage to display on the leaderboard
     for (let i = 0; i < highScores.length; i++) {
         var ListEl = document.createElement("li");
-        ListEl.className = "score-list"
+        ListEl.className = "score-list";
         ListEl.textContent = highScores[i].initials + "- " + highScores[i].score;
         highScoresListEL.appendChild(ListEl);
     }
-}
+};
 
 function clearScores() {
     //clear scores from local storage and remove the current list
     clearScoresEl.addEventListener("click", function () {
         localStorage.clear();
-        highScoresListEL.classList.add("hide")
-    })
-}
+        highScoresListEL.classList.add("hide");
+    });
+};
 
 //show high scores screen when "View High Scores" is selected from home screen
 function viewHighScores() {
     instructionsEl.classList.add("hide");
     startBtnEl.classList.add("hide");
-    highScoresEL.classList.remove("hide")
+    highScoresEL.classList.remove("hide");
     addScoreList();
-    clearScores()
-}
+    clearScores();
+};
 //if skip or go back buttons selected, restart game
 function resetGame() {
     location.reload();
@@ -254,7 +255,7 @@ startBtnEl.addEventListener("click", function () {
 
 //reset game if these are selected
 skipEl.addEventListener("click", resetGame);
-goBackEl.addEventListener("click", resetGame)
+goBackEl.addEventListener("click", resetGame);
 viewHighScoresEl.addEventListener("click", viewHighScores);
 
 //answer buttons for answer checks
