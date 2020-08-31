@@ -21,6 +21,6 @@ This is a very simple quiz that will ask a series of javaScript related question
 
 ### Link
 
-[Live URL] https://camwills89.github.io/coding-quiz-2/
+[Live URL](https://camwills89.github.io/coding-quiz-2/)
 
-[Github repository] https://github.com/CamWills89/coding-quiz-2
+[Github repository](https://github.com/CamWills89/coding-quiz-2)
